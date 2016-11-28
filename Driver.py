@@ -2,8 +2,8 @@ import sys
 import Pre_Processor as pre_processor
 import Classification_Features as cf
 import Feature_tf_idf as tf_idf
-#import Naive_Bayes as Naive_Bayes
-#import Support_Vector_Machine as Support_Vector_Machine
+import Naive_Bayes as Naive_Bayes
+import Support_Vector_Machine as Support_Vector_Machine
 import Feature_Polarity_Subjectivity as PolaritySubjectivity
 import Utils as Utils
 
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     #print(train_features.word_dict)
     feature_Dict = Utils.get_feature_list(train_features)
 
-    print(feature_Dict)
+    #print(feature_Dict)
 
     feature_obj = tf_idf.calculate_tfidf(feature_Dict, train_features)
     train_features = PolaritySubjectivity.calculate_Polarity(feature_Dict, train_features)
@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     train_f = Utils.buildFeatureList(train_features)
 
-    print(train_f)
+    #print(train_f)
 
     #### Testing Data Processing###########
 
@@ -58,5 +58,3 @@ if __name__ == "__main__":
     elif Algorithm_name == "SVM":
         print("Support_Vector_Machine")
         Support_Vector_Machine.Support_Vector_Machine(train_f, test_f)
-
-    '''

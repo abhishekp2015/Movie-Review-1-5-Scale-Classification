@@ -62,16 +62,16 @@ def buildFeatureList(featureObj):
         f_list = []
         for j in range(len(helpfulness)):
 
-            print("\n\n==============================================================\n\n")
+            #print("\n\n==============================================================\n\n")
             feature_d = tf_idf[j]
             feature_d['helpfulness'] = helpfulness[j]
             feature_d['subjectivity'] = subjectivity[j]
             feature_d['polarity'] = polarity[j]
-            print("\n\n==============================================================\n\n")
+            #fprint("\n\n==============================================================\n\n")
 
             f_list.append(feature_d)
 
-        print(f_list)
+        #print(f_list)
         feature_dict[i] = f_list
 
     return feature_dict
