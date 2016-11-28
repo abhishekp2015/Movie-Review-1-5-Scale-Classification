@@ -75,3 +75,10 @@ def buildFeatureList(featureObj):
         feature_dict[i] = f_list
 
     return feature_dict
+
+
+def printstats(p_dict):
+
+    for i in range(1, 6):
+        print(i, ' ->', len(p_dict[i]))
+

@@ -33,6 +33,8 @@ if __name__ == "__main__":
 
     train_f = Utils.buildFeatureList(train_features)
 
+
+
     #print(train_f)
 
     #### Testing Data Processing###########
@@ -46,6 +48,16 @@ if __name__ == "__main__":
     test_features = PolaritySubjectivity.calculate_Subjectivity(feature_Dict, test_features)
 
     test_f = Utils.buildFeatureList(test_features)
+
+    print('Testing feature extration end')
+
+    print('Train data stats:')
+    Utils.printstats(train_f)
+
+    print('Test data stats:')
+    Utils.printstats(test_f)
+
+
 
 
     Algorithm_name = sys.argv[3]
