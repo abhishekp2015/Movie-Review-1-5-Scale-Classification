@@ -1,11 +1,8 @@
 import sys
+import Utils
 from nltk import PorterStemmer
 from nltk.corpus import stopwords
 import os
-import re
-
-word_dict = {}
-
 
 def sentence_split(paragraph, separator):
     s_list = [paragraph]
@@ -18,9 +15,6 @@ def sentence_split(paragraph, separator):
 
 
 def remove_punchuation_marks(paragraph):
-    '''
-    sentences = re.split('!|,|.', paragraph)
-    '''
 
     delimiters = (",", "|", "+", "-", ".", "(", ")", "!", "?")
     sentences = sentence_split(paragraph, delimiters)
@@ -63,13 +57,15 @@ def print_word_list_as_document(words):
 # Stemming of the document
 
 def preprocess_file(file_1):
-    f_content = open(file_1, 'r', encoding="latin1")
-    f_doc = f_content.read()
+    f_dict = Utils.convert_file_to_dictionary(file_1)
+    f_text = f_dict['text']
+
+    #print(f_text)
 
     # print('\n Original Document\n')
     # print(f_doc)
 
-    f_words = remove_punchuation_marks(f_doc)
+    f_words = remove_punchuation_marks(f_text)
     # print('\nAfter punchuation handling\n')
     # print(f_words)
 
@@ -86,45 +82,29 @@ def preprocess_file(file_1):
     words_after_stemming = perform_stemming(words_after_stop_word_removal)
     # print_word_list_as_document(words_after_stemming)
 
-    return words_after_stemming
+    return [words_after_stemming, f_dict['helpfulness'], f_dict['score']]
 
 
-def parse_directory_for_files(dirPath):
-    global word_dict
+def parse_directory_for_files(dirPath, feature_obj):
+
 
     for root, dir, files in os.walk(dirPath):
+
         for file in files:
             f = os.path.join(root, file)
-            words_in_file = preprocess_file(f)
+            [words_in_file, helpfulness, score] = preprocess_file(f)
+            #print(words_in_file)
 
-            # print('file--->', file)
+            feature_obj.review_helpfulness[score].append(helpfulness)
+            feature_obj.word_dict[score].append(words_in_file)
 
-
-            if 'pos' in f:
-                print('pos  file--->', file)
-                word_dict['pos'].append(words_in_file)
-                # print('inside pos', word_dict['pos'])
-
-            elif 'neg' in f:
-                print('neg  file--->', file)
-                word_dict['neg'].append(words_in_file)
-                # print('neg', word_dict['neg'])
+    return feature_obj
 
 
-def define_word_dict():
-    global word_dict
+def perform_preprocessing(dirPath, feature_obj):
 
-    word_dict['pos'] = []
-    word_dict['neg'] = []
+    return parse_directory_for_files(dirPath, feature_obj)
 
-
-def perform_preprocessing(dirPath):
-    global word_dict
-
-    define_word_dict()
-    parse_directory_for_files(dirPath)
-    # print(word_dict)
-    return word_dict
 
 
 if __name__ == "__main__":
