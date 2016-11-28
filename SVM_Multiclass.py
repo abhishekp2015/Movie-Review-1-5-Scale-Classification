@@ -1,8 +1,12 @@
 import nltk
 import Performance as performance
 from sklearn.feature_extraction import DictVectorizer
+from sklearn.multiclass import OneVsRestClassifier
+from sklearn.svm import LinearSVC
+from sklearn.model_selection import StratifiedShuffleSplit
+from sklearn.model_selection import GridSearchCV
 
-def Multinomial_Naive_Bayes(train_tf_idf_dict, test_tf_idf_dict):
+def SVM_Multiclass(train_tf_idf_dict, test_tf_idf_dict):
     '''
     #Train data
     '''
@@ -34,9 +38,37 @@ def Multinomial_Naive_Bayes(train_tf_idf_dict, test_tf_idf_dict):
         training_data_Y.append(5)
 
     vec = DictVectorizer()
-    from sklearn.naive_bayes import MultinomialNB
-    clf = MultinomialNB()
-    clf.fit(vec.fit_transform(training_data_X), training_data_Y)
+    #from sklearn.naive_bayes import MultinomialNB
+    #clf = MultinomialNB()
+    #clf.fit(vec.fit_transform(training_data_X), training_data_Y)
+
+    '''
+    param_grid = [
+        {'C': [1, 10, 100, 1000], 'kernel': ['linear']},
+        {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['rbf']},
+    ]
+    '''
+
+    #svm_multi = OneVsRestClassifier(LinearSVC(random_state=0))
+    #cv = StratifiedShuffleSplit(n_splits=5, test_size=0.2, random_state=42)
+    #grid = GridSearchCV(svm_multi, param_grid=param_grid, cv=cv)
+    #grid.fit(vec.fit_transform(training_data_X), training_data_Y)
+
+    #print("The best parameters are %s with a score of %0.2f->" % (grid.best_params_, grid.best_score_))
+
+    '''
+    C_2d_range = [1e-2, 1, 1e2]
+    gamma_2d_range = [1e-1, 1, 1e1]
+    classifiers = []
+    for C in C_2d_range:
+        for gamma in gamma_2d_range:
+            clf = svm_multi(C=C, gamma=gamma)
+            clf.fit(X_2d, y_2d)
+            classifiers.append((C, gamma, clf))
+    '''
+
+    svm_multi = OneVsRestClassifier(LinearSVC(random_state=0))
+    svm_multi.fit(vec.fit_transform(training_data_X), training_data_Y)
 
     '''
     #Test data
@@ -67,7 +99,7 @@ def Multinomial_Naive_Bayes(train_tf_idf_dict, test_tf_idf_dict):
     test_5_tf_idf = test_tf_idf_dict[5]
 
     for list_each in test_1_tf_idf:
-        strdata=clf.predict(vec.transform(list_each))[0]
+        strdata=svm_multi.predict(vec.transform(list_each))[0]
         if (strdata==1):
             classified_as_1=classified_as_1+1;
             correctly_classified_as_1=correctly_classified_as_1+1
@@ -82,7 +114,7 @@ def Multinomial_Naive_Bayes(train_tf_idf_dict, test_tf_idf_dict):
         belongs_to_1=belongs_to_1+1
 
     for list_each in test_2_tf_idf:
-        strdata=clf.predict(vec.transform(list_each))[0]
+        strdata=svm_multi.predict(vec.transform(list_each))[0]
         if (strdata==1):
             classified_as_1=classified_as_1+1;
         elif(strdata ==2):
@@ -97,7 +129,7 @@ def Multinomial_Naive_Bayes(train_tf_idf_dict, test_tf_idf_dict):
         belongs_to_2=belongs_to_2+1
 
     for list_each in test_3_tf_idf:
-        strdata=clf.predict(vec.transform(list_each))[0]
+        strdata=svm_multi.predict(vec.transform(list_each))[0]
         if (strdata==1):
             classified_as_1=classified_as_1+1;
         elif(strdata ==2):
@@ -112,7 +144,7 @@ def Multinomial_Naive_Bayes(train_tf_idf_dict, test_tf_idf_dict):
         belongs_to_3=belongs_to_3+1
 
     for list_each in test_4_tf_idf:
-        strdata=clf.predict(vec.transform(list_each))[0]
+        strdata=svm_multi.predict(vec.transform(list_each))[0]
         if (strdata==1):
             classified_as_1=classified_as_1+1;
         elif(strdata ==2):
@@ -127,7 +159,7 @@ def Multinomial_Naive_Bayes(train_tf_idf_dict, test_tf_idf_dict):
         belongs_to_4=belongs_to_4+1
 
     for list_each in test_5_tf_idf:
-        strdata=clf.predict(vec.transform(list_each))[0]
+        strdata=svm_multi.predict(vec.transform(list_each))[0]
         if (strdata==1):
             classified_as_1=classified_as_1+1;
         elif(strdata ==2):
@@ -167,4 +199,4 @@ def Multinomial_Naive_Bayes(train_tf_idf_dict, test_tf_idf_dict):
     dict1['correctly_classified_as_5'] = correctly_classified_as_5
     dict1['belongs_to_5'] = belongs_to_5
 
-    performance.calculate_accuracy('Multinomial_NaiveBayes', dict1)
+    performance.calculate_accuracy('SVM_Multiclass', dict1)
