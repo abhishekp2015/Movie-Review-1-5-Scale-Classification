@@ -3,6 +3,7 @@ import Pre_Processor as pre_processor
 import Classification_Features as cf
 import Feature_tf_idf as tf_idf
 import Naive_Bayes as Naive_Bayes
+import MultinomialNayesBayes as Multinomial_Naive_Bayes
 import Support_Vector_Machine as Support_Vector_Machine
 import Feature_Polarity_Subjectivity as PolaritySubjectivity
 import Utils as Utils
@@ -65,7 +66,8 @@ if __name__ == "__main__":
 
     if Algorithm_name == "Naive_Bayes":
         print("===============================================NaiveBayes")
-        Naive_Bayes.Naive_Bayes(train_f, test_f)
+        #Naive_Bayes.Naive_Bayes(train_f, test_f)
+        Multinomial_Naive_Bayes.Multinomial_Naive_Bayes(train_f, test_f)
 
     elif Algorithm_name == "SVM":
         print("Support_Vector_Machine")

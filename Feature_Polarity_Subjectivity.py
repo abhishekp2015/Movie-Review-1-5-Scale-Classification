@@ -20,7 +20,7 @@ def calculate_Polarity(sentence_dict, featureObj):
         polarity = []
         for sentence in sentence_dict[i]:
             sent = TextBlob(sentence)
-            p = sent.sentiment.polarity
+            p = sent.sentiment.polarity+1
             polarity.append(p)
         featureObj.polarity[i] = polarity
     return featureObj
