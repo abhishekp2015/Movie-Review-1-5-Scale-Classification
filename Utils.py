@@ -78,7 +78,9 @@ def buildFeatureList(featureObj):
 
 
 def printstats(p_dict):
+    fo = open('size_feature_vector' + '_output.txt', 'w')
 
     for i in range(1, 6):
-        print(i, ' ->', len(p_dict[i]))
+        #print(i, ' ->', len(p_dict[i]))
+        fo.write(i, ' ->', len(p_dict[i])
 
