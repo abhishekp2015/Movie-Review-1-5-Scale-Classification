@@ -8,6 +8,8 @@ import Support_Vector_Machine as Support_Vector_Machine
 import Feature_Polarity_Subjectivity as PolaritySubjectivity
 import Utils as Utils
 import SVM_Multiclass as SVM_Multiclass
+import Random_forest as Random_Forest
+import SGDClassifier as SGDClassifier
 
 if __name__ == "__main__":
 
@@ -74,3 +76,11 @@ if __name__ == "__main__":
         print("Support_Vector_Machine")
         #Support_Vector_Machine.Support_Vector_Machine(train_f, test_f)
         SVM_Multiclass.SVM_Multiclass(train_f, test_f)
+    
+    elif Algorithm_name == "Random_Forest":
+        print("Random Forest")
+        Random_Forest.Random_Forest(train_f, test_f)
+
+    elif Algorithm_name == "SGDC":
+        print("stochastic gradient descent")
+        SGDClassifier.SGDC(train_f, test_f)
