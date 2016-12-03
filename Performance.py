@@ -132,5 +132,32 @@ def calculate_accuracy(name_classifier,dict1):
         fo.write("5 F1 score:"+'N/A\n')
     else:
         fo.write("5 F1 score:"+str(round(2*recall_5*precision_5/(recall_5+precision_5),2))+'\n')
+    
+    precision_pos=(correctly_classified_as_5+correctly_classified_as_4)/(classified_as_5+classified_as_4)
+    print(precision_pos)
+    fo.write("Pos Precision:"+str(round(precision_pos,2))+'\n')
 
+    recall_pos=(correctly_classified_as_5+correctly_classified_as_4)/(belongs_to_5+belongs_to_4)
+    print(recall_pos)
+    fo.write("Pos Recall:"+str(round(recall_pos,2))+'\n')
+
+    fo.write("Pos F1 score:"+str(round(2*recall_pos*precision_pos/(recall_pos+precision_pos),2))+'\n')
+
+    fo.write("Neutral Precision:"+str(round(precision_3,2))+'\n')
+    fo.write("Neutral Recall:"+str(round(recall_3,2))+'\n')
+    fo.write("Neutral F1 score:"+str(round(2*recall_3*precision_3/(recall_3+precision_3),2))+'\n')
+
+
+    precision_neg=(correctly_classified_as_1+correctly_classified_as_2)/(classified_as_1+classified_as_2)
+    print(precision_neg)
+    fo.write("Pos Precision:"+str(round(precision_neg,2))+'\n')
+
+    recall_neg=(correctly_classified_as_1+correctly_classified_as_2)/(belongs_to_1+belongs_to_2)
+    print(recall_neg)
+    fo.write("Pos Recall:"+str(round(recall_neg,2))+'\n')
+
+    fo.write("Pos F1 score:"+str(round(2*recall_neg*precision_neg/(recall_neg+precision_neg),2))+'\n')
+    
     fo.close()
+    
+    
