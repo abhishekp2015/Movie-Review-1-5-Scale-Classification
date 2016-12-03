@@ -150,13 +150,13 @@ def calculate_accuracy(name_classifier,dict1):
 
     precision_neg=(correctly_classified_as_1+correctly_classified_as_2)/(classified_as_1+classified_as_2)
     print(precision_neg)
-    fo.write("Pos Precision:"+str(round(precision_neg,2))+'\n')
+    fo.write("Neg Precision:"+str(round(precision_neg,2))+'\n')
 
     recall_neg=(correctly_classified_as_1+correctly_classified_as_2)/(belongs_to_1+belongs_to_2)
     print(recall_neg)
-    fo.write("Pos Recall:"+str(round(recall_neg,2))+'\n')
+    fo.write("Neg Recall:"+str(round(recall_neg,2))+'\n')
 
-    fo.write("Pos F1 score:"+str(round(2*recall_neg*precision_neg/(recall_neg+precision_neg),2))+'\n')
+    fo.write("Neg F1 score:"+str(round(2*recall_neg*precision_neg/(recall_neg+precision_neg),2))+'\n')
     
     fo.close()
     
